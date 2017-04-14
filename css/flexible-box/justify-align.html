@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>justify-content align-items</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta charset="utf-8">
+    <style type="text/css">
+        .flex {
+            display: flex;
+            margin-top: 10px;
+            border: 1px solid grey;
+        }
+        .flex-row {
+            padding: 5px;
+            box-sizing: content-box;
+            width: 500px;
+        }
+        .flex-clo {
+            padding: 5px;
+            box-sizing: content-box;
+            width: 500px;
+            height: 200px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            line-height: 100px;
+            text-align: center;
+            color: white;
+            background-color: rgb(140, 210, 250);
+            border: 1px solid white;
+        }
+        .cell-1 {
+            height: 80px;
+            line-height: 80px;
+        }
+        .cell-2 {
+            height: 120px;
+            line-height: 80px;
+        }
+        .cell-3 {
+            height: 160px;
+            line-height: 160px;
+        }
+        .cell-stretch {
+            width: 100px;
+            overflow: hidden;
+            text-align: center;
+            color: white;
+            background-color: rgb(140, 210, 250);
+            border: 1px solid white;
+        }
+        /* flex-direction */
+        .column {
+            flex-direction: column;
+        }
+        /* justify-content */
+        .flex-start-row {
+            justify-content: flex-start;
+        }
+        .flex-end-row {
+            justify-content: flex-end;
+        }
+        .center-row {
+            justify-content: center;
+        }
+        .space-between-row {
+            justify-content: space-between;
+        }
+        .space-around-row {
+            justify-content: space-around;
+        }
+        /* align-items */
+        .flex-start-clo {
+            align-items: flex-start;
+        }
+        .flex-end-clo {
+            align-items: flex-end;
+        }
+        .center-clo {
+            align-items: center;
+        }
+        .stretch-clo {
+            align-items: stretch;
+        }
+        .baseline-clo {
+            align-items: baseline;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <b>justify-content:</b> flex-start | flex-end | center | space-between | space-around
+    </p>
+    <div class="flex flex-row flex-start-row">
+        <div class="cell">1</div>
+        <div class="cell">2</div>
+        <div class="cell">3</div>
+    </div>
+    <div class="flex flex-row flex-end-row">
+        <div class="cell">1</div>
+        <div class="cell">2</div>
+        <div class="cell">3</div>
+    </div>
+    <div class="flex flex-row center-row">
+        <div class="cell">1</div>
+        <div class="cell">2</div>
+        <div class="cell">3</div>
+    </div>
+    <div class="flex flex-row space-between-row">
+        <div class="cell">1</div>
+        <div class="cell">2</div>
+        <div class="cell">3</div>
+    </div>
+    <div class="flex flex-row space-around-row">
+        <div class="cell">1</div>
+        <div class="cell">2</div>
+        <div class="cell">3</div>
+    </div>
+    <p><b>align-items:</b> flex-start | flex-end | center | stretch | baseline</p>
+    <div class="flex flex-clo flex-start-clo">
+        <div class="cell cell-1">1</div>
+        <div class="cell cell-2">2</div>
+        <div class="cell cell-3">3</div>
+    </div>
+    <div class="flex flex-clo flex-end-clo">
+        <div class="cell cell-1">1</div>
+        <div class="cell cell-2">2</div>
+        <div class="cell cell-3">3</div>
+    </div>
+    <div class="flex flex-clo center-clo">
+        <div class="cell cell-1">1</div>
+        <div class="cell cell-2">2</div>
+        <div class="cell cell-3">3</div>
+    </div>
+    <p>
+        如果子元素设置了高度，stretch无效
+    </p>
+    <div class="flex flex-clo stretch-clo">
+        <div class="cell-stretch">1</div>
+        <div class="cell-stretch">2</div>
+        <div class="cell-stretch">3</div>
+    </div>
+    <div class="flex flex-clo baseline-clo">
+        <div class="cell cell-1">1</div>
+        <div class="cell cell-2">2</div>
+        <div class="cell cell-3">3</div>
+    </div>
+</body>
+</html>

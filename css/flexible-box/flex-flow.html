@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>flex-flow flex-direction flex-wrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta charset="utf-8">
+    <style type="text/css">
+        .flex {
+            display: flex;
+            display: -webkit-flex;
+            margin-top: 10px;
+            width: 250px;
+            height: 250px;
+            border: 1px solid grey;
+        }
+        .flex-3 {
+            height: 20px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            color: white;
+            background-color: rgb(140, 210, 250);
+            border: 1px solid white;
+        }
+        /* flex-direction */
+        .row {
+            flex-direction: row;
+        }
+        .row-reverse {
+            flex-direction: row-reverse;
+        }
+        .column {
+            flex-direction: column;
+        }
+        .column-reverse {
+            flex-direction: column-reverse;
+        }
+        /* flex-wrap */  
+        .nowrap {
+            flex-wrap: nowrap;
+        }
+        .wrap {
+            flex-wrap: wrap;
+        }
+        .wrap-reverse {
+            flex-wrap: wrap-reverse;
+        }
+        /* flex-flow */
+        .flex-flow {
+            flex-flow: column wrap;
+        }
+    </style>
+</head>
+<body>
+    <p>flex-flow: flex-direction || flex-wrap;</p>
+    <div class="flex flex-flow">
+        <div class="cell">1</div>
+        <div class="cell">2</div>
+        <div class="cell">3</div>
+    </div>
+    <p>虽然设置了宽度，但内容没撑满时会收缩</p>
+    <div class="flex row">
+        <div class="cell">1</div>
+        <div class="cell">2</div>
+        <div class="cell">3</div>
+    </div>
+    <div class="flex row wrap">
+        <div class="cell">1111111111111111111111111111111111111</div>
+        <div class="cell">2222222222222222222222222222222222222</div>
+        <div class="cell">3333333333333333333333333333333333333</div>
+    </div>
+    <div class="flex row-reverse wrap-reverse">
+        <div class="cell">1111111111111111111111111111111111111</div>
+        <div class="cell">2222222222222222222222222222222222222</div>
+        <div class="cell">3333333333333333333333333333333333333</div>
+    </div>
+    <div class="flex column flex-3 nowrap">
+        <div class="cell">1111111111111111111111111111111111111</div>
+        <div class="cell">2222222222222222222222222222222222222</div>
+        <div class="cell">3333333333333333333333333333333333333</div>
+    </div>
+    <div class="flex column-reverse">
+        <div class="cell">1</div>
+        <div class="cell">2</div>
+        <div class="cell">3</div>
+    </div>
+</body>
+</html>

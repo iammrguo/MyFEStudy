@@ -9,13 +9,44 @@
         intputId = $('#loupan-id'),
         btnSub = $('#btn-sub');
 
+    // 初始化
+    var arrKey = ['pid', 'proj_name', 'provinceName', 'cityName', 'create_time', 'update_time', 'creator', 'status', 'source'],
+        arrKeyDisplay = ['楼盘ID', '楼盘名称', '省', '市', '创建时间', '更新时间', '责任人', '楼盘状态', '来源'],
+        loupanList = [],
+        totalPage = 0,
+        pageList = [1, 2, 3, 4, '...'],
+        cityList = [],
+        provinceList = [
+            {pName: '北京市', pId: 1},
+            {pName: '河北省', pId: 3}
+        ],
+        statusList = [
+            {name: '显示', value: 1},
+            {name: '隐藏', value: 0}
+        ],
+        sourceList = [
+            {name: '爬虫', value: 0},
+            {name: '开发商', value: 1},
+            {name: '个人线索', value: 2}
+        ],
+        params = {'page': 1, 'count': 10};
+
     // 自定义组件
-    // component: my-tr
-    function templateGen(tds) {
+    function tableGen (ths) {
+        var th;
+        var res = '<table class="table"><thead><tr>';
+        for (th in ths) {
+            console.log(th, ths[th]);
+            res += '<th>' + ths[th] + '</th>';
+        }
+        res += '</tr></thead><tbody><row v-for="loupan in this.$parent.loupanList" v-bind:item="loupan"></row></tbody></table>';
+        console.log(res);
+        return res;
+    }
+    function trGen (tds) {
         var td;
         var res = '<tr>';
         for (td in tds) {
-            console.log(td, tds[td]);
             if (tds[td] == 'create_time' || tds[td] == 'update_time') {
                 res += '<td>{{ item.' + tds[td] + ' | dateFormat }}</td>';
             } else if (tds[td] == 'status') {
@@ -27,57 +58,48 @@
             }
         }
         res += '</tr>';
-        console.log(res);
         return res;
     }
-    var arr = ['pid', 'proj_name', 'provinceName', 'cityName', 'create_time', 'update_time', 'creator', 'status', 'source'];
-    var rowComp = {
+    // 子组件: <row></row>
+    var rowComponent = {
         props: ['item'],
-        template: templateGen(arr)
+        template: trGen(arrKey),
+        filters: {
+            dateFormat: function (value) {
+                var valDate = new Date(value);
+                var year = valDate.getFullYear(),
+                    month = valDate.getMonth() + 1,
+                    day = valDate.getDate()
+                return year + '-' + (month >= 10 ? month : ('0' + month)) + '-' + (day >= 10 ? day : ('0' + day));
+            },
+            statusFormat: function (value) {
+                $.each(statusList, function (index, item) {
+                    if (value == item.value) {
+                        value = item.name;
+                    }
+                });
+                return value;
+            },
+            sourceFormat: function (value) {
+                $.each(sourceList, function (index, item) {
+                    if (value == item.value) {
+                        value = item.name;
+                    }
+                });
+                return value;
+            }
+        }
     };
-
-    // Vue初始化
-    var loupanList = [];
-    var totalPage = 0;
-    var pageList = [1, 2, 3, 4, '...'];
-    var cityList = [];
-    var provinceList = [
-        {pName: '北京市', pId: 1},
-        {pName: '河北省', pId: 3}
-    ];
-    var statusList = [
-        {name: '显示', value: 1},
-        {name: '隐藏', value: 0}
-    ];
-    var sourceList = [
-        {name: '爬虫', value: 0},
-        {name: '开发商', value: 1},
-        {name: '个人线索', value: 2}
-    ];
-    var params = {'page': 1, 'count': 10};
-    Vue.filter('dateFormat' , function(value) {
-        var valDate = new Date(value);
-        var year = valDate.getFullYear(),
-            month = valDate.getMonth() + 1,
-            day = valDate.getDate()
-        return year + '-' + (month >= 10 ? month : ('0' + month)) + '-' + (day >= 10 ? day : ('0' + day));
-    });
-    Vue.filter('statusFormat' , function(value) {
-        $.each(statusList, function (index, item) {
-            if (value == item.value) {
-                value = item.name;
-            }
-        });
-        return value;
-    });
-    Vue.filter('sourceFormat' , function(value) {
-        $.each(sourceList, function (index, item) {
-            if (value == item.value) {
-                value = item.name;
-            }
-        });
-        return value;
-    });
+    // 父组件: <table-loupan></table-loupan>
+    var tableComponent = {
+        data: {
+            loupanList: loupanList
+        },
+        template: tableGen(arrKeyDisplay),
+        components: {
+            'row': rowComponent,
+        }
+    };
 
     var app = new Vue({
         el: '#list',
@@ -90,10 +112,11 @@
             provinceList: provinceList,
             params: params,
             statusList: statusList,
-            sourceList: sourceList
+            sourceList: sourceList,
+            arrKeyDisplay: arrKeyDisplay
         },
         components: {
-            'row': rowComp
+            'table-loupan': tableComponent
         }
     });
 

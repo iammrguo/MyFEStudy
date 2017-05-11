@@ -56,7 +56,7 @@
                     <input type="text" class="form-control" id="loupan-id" v-model="params.pid">
                 </div>
                 <div class="form-group col-md-3">
-                    <div class="btn btn-primary btn-sub" id="btn-sub">
+                    <div class="btn btn-default btn-sub" id="btn-sub">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                         搜索
                     </div>
@@ -65,26 +65,7 @@
         </div>
     </div>
     <div class="table-wrapper">
-        <table class="table">
-            <thead>
-                <th>楼盘ID</th>
-                <th>楼盘名称</th>
-                <th>省</th>
-                <th>市</th>
-                <th>创建时间</th>
-                <th>更新时间</th>
-                <th>责任人</th>
-                <th>楼盘状态</th>
-                <th>来源</th>
-            </thead>
-            <tbody>
-                <!-- <div> -->
-                <template>
-                    <row v-for="loupan in loupanList" v-bind:item="loupan"></row>
-                </template>
-                <!-- </div>     -->
-            </tbody>    
-        </table>
+        <table-loupan></table-loupan>
     </div>
     <div class="page-wrapper" v-show="totalPage > 0">
         <nav aria-label="Page navigation">

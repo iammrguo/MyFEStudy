@@ -2,10 +2,113 @@
 <html>
 <head>
     <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/table/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/table/src/index.css">
 </head>
-<body>
-<p class="p">Hello World! Test html</p>
+<body class="body">
+<div class="main" id="list">
+    <div class="select-wrapper">
+        <div class="row">
+            <form class="form-inline">
+                <div class="form-group col-md-3">
+                    <label for="province" class="label-input">省份：</label>
+                    <select class="form-control" id="province" v-model="params.provinceId">
+                        <option value="-1">全部</option>
+                        <option v-for="province in provinceList" v-bind:value="province.pId">{{ province.pName }}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="city" class="label-input">城市：</label>
+                    <select class="form-control" id="city" v-model="params.cityId">
+                        <option value="-1">全部</option>                       
+                        <option v-for="city in cityList" v-bind:value="city.cityId">{{ city.cityName }}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="loupan-name" class="label-input">楼盘名称：</label>
+                    <input type="text" class="form-control" id="loupan-name" v-model="params.projName">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="status">楼盘状态：</label>
+                    <select class="form-control" id="status" v-model="params.status">
+                        <option value="-1">全部</option>
+                        <option v-for="sta in statusList" v-bind:value="sta.value">{{ sta.name }}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <form class="form-inline">
+                <div class="form-group col-md-3">
+                    <label for="source" class="label-input">来源：</label>
+                    <select class="form-control" id="source" v-model="params.source">
+                        <option value="-1">全部</option>
+                        <option v-for="sour in sourceList" v-bind:value="sour.value">{{ sour.name }}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="creator" class="label-input">责任人：</label>
+                    <input type="text" class="form-control" id="creator" v-model="params.creator">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="loupan-name" class="label-input">楼盘ID：</label>
+                    <input type="text" class="form-control" id="loupan-id" v-model="params.pid">
+                </div>
+                <div class="form-group col-md-3">
+                    <div class="btn btn-primary btn-sub" id="btn-sub">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        搜索
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-wrapper">
+        <table class="table">
+            <thead>
+                <th>楼盘ID</th>
+                <th>楼盘名称</th>
+                <th>省</th>
+                <th>市</th>
+                <th>创建时间</th>
+                <th>更新时间</th>
+                <th>责任人</th>
+                <th>楼盘状态</th>
+                <th>来源</th>
+            </thead>
+            <tbody>
+                <!-- <div> -->
+                <template>
+                    <row v-for="loupan in loupanList" v-bind:item="loupan"></row>
+                </template>
+                <!-- </div>     -->
+            </tbody>    
+        </table>
+    </div>
+    <div class="page-wrapper" v-show="totalPage > 0">
+        <nav aria-label="Page navigation">
+            <ul class="pagination" id="page-list">
+                <li>
+                    <a href="javascript:void(0);" aria-label="Previous" class="page-item">
+                        &laquo;
+                    </a>
+                </li>
+                <li v-for="n in pageList" v-bind:class="{ active: n == curPage }">
+                    <a href="javascript:void(0);" class="page-item" v-bind:data-no="n">{{ n }}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" aria-label="Next" class="page-item">
+                        &raquo;
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<script type="text/javascript" src="/table/node_modules/vue/dist/vue.min.js"></script>
+<script type="text/javascript" src="/table/node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/table/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/table/src/index.js"></script>
 </body>
 </html>

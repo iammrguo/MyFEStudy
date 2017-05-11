@@ -1,4 +1,39 @@
-.p {
-    font-size: 20px;
-    color: red;
+.body {
+    text-align: center;
 }
+.main {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.row {
+    padding: 10px 0;
+}
+.label-input {
+    width: 70px;
+}
+select {
+    width: 172px !important;
+}
+.btn-sub {
+    width: 90px;
+}
+
+.table-wrapper {
+    margin-top: 20px;
+}
+.table th {
+    text-align: center;
+}
+.table th:nth-child(2) {
+    width: 280px;
+}
+.table th:nth-child(3) {
+    width: 130px;
+}
+.table th:nth-child(7) {
+    width: 150px;
+}
+/*.page-wrapper {
+    display: none;
+}*/

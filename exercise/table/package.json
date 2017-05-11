@@ -1,0 +1,18 @@
+{
+  "name": "table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "vue.js",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "vue": "^2.3.2"
+  },
+  "devDependencies": {
+    "gulp-jslint": "^1.0.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

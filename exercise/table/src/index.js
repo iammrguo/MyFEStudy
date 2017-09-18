@@ -16,42 +16,59 @@
         totalPage = 0,
         pageList = [1, 2, 3, 4, '...'],
         cityList = [],
-        provinceList = [
-            {pName: '北京市', pId: 1},
-            {pName: '河北省', pId: 3}
-        ],
-        statusList = [
-            {name: '显示', value: 1},
-            {name: '隐藏', value: 0}
-        ],
-        sourceList = [
-            {name: '爬虫', value: 0},
-            {name: '开发商', value: 1},
-            {name: '个人线索', value: 2}
-        ],
-        params = {'page': 1, 'count': 10};
+        provinceList = [{
+            pName: '北京市',
+            pId: 1
+        }, {
+            pName: '河北省',
+            pId: 3
+        }],
+        statusList = [{
+            name: '显示',
+            value: 1
+        }, {
+            name: '隐藏',
+            value: 0
+        }],
+        sourceList = [{
+            name: '爬虫',
+            value: 0
+        }, {
+            name: '开发商',
+            value: 1
+        }, {
+            name: '个人线索',
+            value: 2
+        }],
+        params = {
+            page: 1,
+            count: 10
+        };
 
     // 自定义组件
-    function tableGen (ths) {
+    function tableGen(ths) {
         var th;
         var res = '<table class="table"><thead><tr>';
         for (th in ths) {
-            console.log(th, ths[th]);
+            // console.log(th, ths[th]);
             res += '<th>' + ths[th] + '</th>';
         }
         res += '</tr></thead><tbody><row v-for="loupan in this.$parent.loupanList" v-bind:item="loupan"></row></tbody></table>';
         console.log(res);
         return res;
     }
-    function trGen (tds) {
+
+    function trGen(tds) {
         var td;
         var res = '<tr>';
         for (td in tds) {
-            if (tds[td] == 'create_time' || tds[td] == 'update_time') {
+            if (tds[td] === 'create_time' || tds[td] == 'update_time') {
                 res += '<td>{{ item.' + tds[td] + ' | dateFormat }}</td>';
-            } else if (tds[td] == 'status') {
+            } else if (tds[td] === 'pid') {
+                res += '<td>{{ item.' + tds[td] + ' }}</td>';
+            } else if (tds[td] === 'status') {
                 res += '<td>{{ item.' + tds[td] + ' | statusFormat }}</td>';
-            } else if (tds[td] == 'source') {
+            } else if (tds[td] === 'source') {
                 res += '<td>{{ item.' + tds[td] + ' | sourceFormat }}</td>';
             } else {
                 res += '<td>{{ item.' + tds[td] + ' }}</td>';
@@ -69,7 +86,7 @@
                 var valDate = new Date(value);
                 var year = valDate.getFullYear(),
                     month = valDate.getMonth() + 1,
-                    day = valDate.getDate()
+                    day = valDate.getDate();
                 return year + '-' + (month >= 10 ? month : ('0' + month)) + '-' + (day >= 10 ? day : ('0' + day));
             },
             statusFormat: function (value) {
@@ -97,9 +114,13 @@
         },
         template: tableGen(arrKeyDisplay),
         components: {
-            'row': rowComponent,
+            row: rowComponent
         }
     };
+    // 排序
+    function down(x, y) {
+        return (x.pid > y.pid) ? 1 : -1;
+    }
 
     var app = new Vue({
         el: '#list',
@@ -125,15 +146,17 @@
             type: 'get',
             // url: 'http://house-be-manage.focus-test.cn/project/listProject',
             url: '/project/listProject',
-            data: {'params': paramsFomat(params)},
-            dataType :'json',
+            data: {
+                'params': paramsFomat(params)
+            },
+            dataType: 'json',
             success: function (res) {
                 // console.log(res);
                 if (res.code === 200) {
+                    res.data.content.sort(down);
                     app.loupanList = res.data.content;
                     setPage(params.page, Math.ceil(res.data.totalNum / params.count));
-                }
-                else {
+                } else {
                     alert(res.msg);
                     app.loupanList = [];
                 }
@@ -145,7 +168,7 @@
             }
         });
     }
-
+    // 页码
     function setPage(cur, total) {
         if (total) {
             app.totalPage = total;
@@ -164,18 +187,22 @@
                 pageList.push(i);
             }
             pageList.push('...');
+        } else {
+            for (i = 1; i < total; i++) {
+                pageList.push(i);
+            }
         }
         app.pageList = pageList;
         // console.log(cur + '/' + total);
     }
 
-    function paramsFomat (params) {
+    function paramsFomat(params) {
         var formatedParams = JSON.parse(JSON.stringify(params));
         $.each(formatedParams, function (index, item) {
             if (!isNaN(item) && index !== 'pid') {
                 formatedParams[index] = parseInt(item);
                 if (formatedParams[index] === -1) {
-                    delete formatedParams[index];    
+                    delete formatedParams[index];
                 }
             }
         });
@@ -185,8 +212,16 @@
     $('#page-list').on('click', '.page-item', function (e) {
         var no = $(this).data('no');
         if (no === '«') {
-            params.page = no;
-            getLoupanList(params);
+            console.log('error');
+            if (app.curPage > 1) {
+                params.page = app.curPage - 1;
+                getLoupanList(params);
+            }
+        } else if (no === '»') {
+            if (app.curPage < app.totalPage) {
+                params.page = app.curPage + 1;
+                getLoupanList(params);
+            }
         } else if (no !== '...') {
             params.page = no;
             getLoupanList(params);
@@ -198,14 +233,15 @@
             type: 'get',
             // url: 'http://house-sv-base.focus-test.cn/city/list',
             url: '/city/list',
-            data: {'provinceId': params.provinceId},
-            dataType :'json',
+            data: {
+                'provinceId': params.provinceId
+            },
+            dataType: 'json',
             success: function (res) {
                 // console.log(res);
                 if (res.code === 1) {
                     app.cityList = res.data;
-                }
-                else {
+                } else {
                     alert(res.msg);
                 }
             },
@@ -218,12 +254,12 @@
     });
 
     $('#btn-sub').on('click', function (e) {
-        
-        // console.log(formatedParams, JSON.stringify(formatedParams));
-        getLoupanList(params);
-    })
-    // 初始化页面
-    function init (params) {
+
+            // console.log(formatedParams, JSON.stringify(formatedParams));
+            getLoupanList(params);
+        })
+        // 初始化页面
+    function init(params) {
         getLoupanList(params);
     }
     init(params);

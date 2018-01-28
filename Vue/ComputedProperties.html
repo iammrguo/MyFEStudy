@@ -8,6 +8,9 @@
 <div id="app">
 	<p>Original: {{ message }}</p>
 	<p>Computed: {{ reversedMessage }}</p>
+	<p>methodsDate: {{ methodsDate() }}</p>
+	<p>ComputedDate: {{ computedDate }}</p>
+	<p>每当触发重新渲染时，调用方法将总会再次执行函数</p>
 </div>
 </body>
 <script type="text/javascript" src="vue.js"></script>
@@ -17,9 +20,21 @@
 		data: {
 			message: 'Hello'
 		},
+		methods: {
+			methodsDate: function() {
+				setTimeout(function () {
+					console.log('test');
+					app.message = 'test';
+				}, 3000);
+				return Date.now();
+			}
+		},
 		computed: {
 			reversedMessage: function() {
 				return this.message.split('').reverse().join('');
+			},
+			computedDate: function() {
+				return Date.now();
 			}
 		}
 	})

@@ -4,6 +4,11 @@ var url = require('url');
 var path   = require('path');
 var mime = require('./mime').mime;
 var querystring=require("querystring");
+var test = {
+    a: '线索1',
+    b: '线索2',
+    c: '线索3'
+}
 
 http.createServer(function (request, response){
     // 解析请求，包括文件名
@@ -75,6 +80,16 @@ http.createServer(function (request, response){
         });
 
         req.end();
+    } else if (pathname == '/test') {
+        var data = 'test', indexTest;
+        for (indexTest in test) {
+            data = test[indexTest];
+            delete test[indexTest];
+            break;
+        }
+        console.log(test);
+        response.setHeader('Content-Type','text/javascript;charset=UTF-8');
+        response.write(data);
     } else {
         // 从文件系统中读取请求的文件内容
         fs.readFile(pathname.substr(1), function (err, data) {

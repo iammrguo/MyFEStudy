@@ -1,0 +1,18 @@
+{
+  "name": "exercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mime.js",
+  "dependencies": {
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "vtl-loader": "^0.2.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

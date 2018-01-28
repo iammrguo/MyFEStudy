@@ -3,11 +3,55 @@
 <head>
 	<title></title>
 	<meta http-equiv="Content-Type" content="text/html charset=utf-8">
+	<style type="text/css">
+		.a {
+			display: block;
+			position: relative;
+			margin-top: 20px;
+			width: 200px;
+			height: 200px;
+			background-color: black;
+		}
+		.b {
+			display: block;
+			position: absolute;
+			top: 50px;
+			left: 50px;
+			width: 100px;
+			height: 100px;
+			background-color: white;
+		}
+	</style>
 </head>
 <body>
 <div id="app">
 	<p>{{message}}</p>
 	<button v-on:click="reverseMessage">逆转消息</button>
+
+	<h2>事件修饰符</h2>
+	<p>.capture</p>
+	<div class="a" @click.capture="doThis">
+		<div class="b" @click="doThat"></div>
+	</div>
+	<p>.stop</p>
+	<div class="a" @click="doThis">
+		<div class="b" @click.stop="doThat"></div>
+	</div>
+	<p>.self</p>
+	<div class="a" @click.self="doThis">
+		<div class="b"></div>
+	</div>
+	<p>.prevent</p>
+	<a class="a" href="http://www.baidu.com" @click.self.prevent="doThis">
+		<div class="b" @click="doThat"></div>
+	</a>
+	<p>submit.prevent</p>
+	<form class="a" @submit.prevent="doThis" id="test-form">
+		<!-- <div class="b" @click="submitForm"></div> -->
+		<input class="b" type="submit" value="提交">
+	</form>
+	<p>修饰键 .ctrl .alt .shift .meta</p>
+	<input type="text" class="c" name="" @keyup.ctrl="doThat">
 </div>
 </body>
 <script type="text/javascript" src="vue.js"></script>
@@ -20,6 +64,16 @@
 		methods: {
 			reverseMessage: function() {
 				this.message = this.message.split('').reverse().join('');
+			},
+			doThis: function (event) {
+				alert(event.target.className + ',外');
+			},
+			doThat: function (event) {
+				alert(event.target.className + ',内');
+			},
+			submitForm: function (event) {
+				// event.target.submit();
+				document.getElementById('test-form').submit();
 			}
 		}
 	})

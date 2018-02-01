@@ -65,9 +65,14 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "a59f5b7f46e1de71a9d64b1e330f774a.jpg";
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["default"] = printMe;
+function printMe() {
+    console.log('I get called from print.js!');
+}
 
 /***/ }),
 /* 1 */
@@ -77,31 +82,37 @@ module.exports = __webpack_require__.p + "a59f5b7f46e1de71a9d64b1e330f774a.jpg";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_css__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__icon_jpg__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__icon_jpg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__icon_jpg__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_xml__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__print_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_css__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__style_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_xml__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_xml___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__data_xml__);
 
 
 
+// import Icon from './icon.jpg';
 
 
 
 function component() {
     var element = document.createElement('div');
+    var btn = document.createElement('button');
 
     // Lodash, now imported by this script
     element.innerHTML = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.join(['Hello', 'webpack'], ' ');
     element.classList.add('hello');
 
-    var myIcon = new Image();
-    myIcon.src = __WEBPACK_IMPORTED_MODULE_2__icon_jpg___default.a;
+    // // img
+    // var myIcon = new Image();
+    // myIcon.src = Icon;
+    // element.appendChild(myIcon);
 
-    element.appendChild(myIcon);
-
+    // xml
     console.log(__WEBPACK_IMPORTED_MODULE_3__data_xml___default.a);
+
+    btn.innerHTML = 'Click me and check the console!';
+    btn.onclick = __WEBPACK_IMPORTED_MODULE_1__print_js__["default"];
+    element.appendChild(btn);
 
     return element;
 }
@@ -17270,7 +17281,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(9)(content, options);
+var update = __webpack_require__(10)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -17296,7 +17307,7 @@ exports = module.exports = __webpack_require__(8)(false);
 
 
 // module
-exports.push([module.i, ".hello {\n    color: blue;\n    background: url(" + escape(__webpack_require__(0)) + ");\n}", ""]);
+exports.push([module.i, ".hello {\n    color: blue;\n    line-height: 20px;\n}\n\n.hello::before {\n    content: '';\n    display: inline-block;\n    margin-right: 5px;\n    width: 20px;\n    height: 20px;\n    background: url(" + escape(__webpack_require__(9)) + ") no-repeat;\n    background-size: 20px;\n}", ""]);
 
 // exports
 
@@ -17406,6 +17417,12 @@ function toComment(sourceMap) {
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__.p + "a59f5b7f46e1de71a9d64b1e330f774a.jpg";
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
@@ -17459,7 +17476,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(10);
+var	fixUrls = __webpack_require__(11);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -17775,7 +17792,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 
@@ -17870,7 +17887,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = {"note":{"to":["Mary"],"from":["John"],"heading":["Reminder"],"body":["Call Cindy on Tuesday"]}}

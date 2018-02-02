@@ -14,11 +14,13 @@
     "html-webpack-plugin": "^2.30.1",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1",
     "xml-loader": "^1.2.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack"
+    "watch": "webpack --watch",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",

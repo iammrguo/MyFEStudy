@@ -1,6 +1,7 @@
 const path = require('path'),
     CleanWebpackPlugin = require('clean-webpack-plugin'),
-    HtmlWebpackPlugin = require('html-webpack-plugin');
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -13,7 +14,8 @@ module.exports = {
         ]),
         new HtmlWebpackPlugin({
             title: 'Production'
-        })
+        }),
+        new ExtractTextPlugin('[name].[chunkhash].css')
     ],
     output: {
         filename: '[name].bundle.js',
@@ -23,10 +25,28 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
+                // use: [
+                //     'style-loader',
+                //     'css-loader'
+                // ]
+                use: ExtractTextPlugin.extract({
+                    // publicPath: '/',
+                    fallback: 'style-loader',
+                    use: 'css-loader'
+                })
+            },
+            {
+                test: /\.scss/,
+                // use: [
+                //     'style-loader',
+                //     'css-loader',
+                //     'scss-loader'
+                // ]
+                use: ExtractTextPlugin.extract({
+                    // publicPath: '/',
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'sass-loader']
+                })
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,

@@ -7,7 +7,7 @@ module.exports = merge(common, {
     output: {
         publicPath: '/'
     },
-    devServer: 'source-map',
+    devtool: 'source-map',
     plugins: [
         new UglifyJSPlugin({
             sourceMap: true

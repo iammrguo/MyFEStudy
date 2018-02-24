@@ -1,11 +1,13 @@
 const path = require('path'),
+    webpack = require('webpack'),
     CleanWebpackPlugin = require('clean-webpack-plugin'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './src/index.js'
+        app: './src/index.js',
+        another: './src/another-module.js'
         // print: './src/print.js'
     },
     plugins: [
@@ -15,7 +17,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Production'
         }),
-        new ExtractTextPlugin('[name].[chunkhash].css')
+        new ExtractTextPlugin('[name].[chunkhash].css'),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'common' // 指定公共bundle的名称
+        })
     ],
     output: {
         filename: '[name].bundle.js',

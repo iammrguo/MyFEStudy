@@ -6,9 +6,13 @@ const path = require('path'),
 
 module.exports = {
     entry: {
-        app: './src/index.js',
-        another: './src/another-module.js'
+        // app: './src/index.js'
+        // another: './src/another-module.js'
         // print: './src/print.js'
+        'dynamic-imports': './src/dynamic-imports.js',
+        vendor: [
+            'lodash'
+        ]
     },
     plugins: [
         new CleanWebpackPlugin([
@@ -18,12 +22,19 @@ module.exports = {
             title: 'Production'
         }),
         new ExtractTextPlugin('[name].[chunkhash].css'),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'common' // 指定公共bundle的名称
+        // })
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'common' // 指定公共bundle的名称
+            name: 'vendor'
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest'
         })
     ],
     output: {
         filename: '[name].bundle.js',
+        chunkFilename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
     module: {

@@ -16,6 +16,8 @@ module.exports = merge(common, {
         hot: true
     },
     plugins: [
+        // 1. 当开启 HMR 的时候使用该插件会显示模块的相对路径，建议用于开发环境
+        // 2. 生成文件hash时将使用模块的路径，而不是数字标识符
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ]

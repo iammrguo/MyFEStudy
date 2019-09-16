@@ -1,6 +1,7 @@
 const merge = require('webpack-merge'),
     webpack = require('webpack'),
     UglifyJSPlugin = require('uglifyjs-webpack-plugin'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin'),
     common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -9,6 +10,7 @@ module.exports = merge(common, {
     },
     devtool: 'source-map',
     plugins: [
+        new ExtractTextPlugin('[name].[chunkhash].css'),
         new webpack.HashedModuleIdsPlugin(), // 根据模块的相对路径生成一个四位数的hash作为模块id
         new UglifyJSPlugin({
             sourceMap: true

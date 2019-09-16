@@ -32,7 +32,7 @@ http.createServer(function (request, response){
             var data = ''; 
             res.on('data', function (chunk) {
                 data += chunk;
-            }); 
+            });
             res.on('end', function () {
                 // HTTP 状态码: 200 : OK
                 // Content Type: text/plain
@@ -42,7 +42,7 @@ http.createServer(function (request, response){
                 response.write(data);
                 //  发送响应数据
                 response.end();
-            }); 
+            });
         });
 
         req.on('error', function(e) {

@@ -1,13 +1,7 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+<view class='title'>此处是标题</view>
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取电话号</button>
+<view class='red {{className ? "fixed" : ""}}'></view>
+<view class="intro">
+<image wx:for="{{30}}" src='https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1539846537&di=f0a21d5650fc0e485f9deb57b0b0f7e1&src=http://miboapp.cn/mow/static/img/wxxcx03.png'></image>
+
 </view>

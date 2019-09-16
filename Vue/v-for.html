@@ -11,6 +11,7 @@
 			{{ todo.text }}
 		</li>
 	</ol>
+	<input type="text" v-for="todo in todos" :placeholder="todo.text" />
 </div>
 <script type="text/javascript" src="vue.js"></script>
 <script type="text/javascript">

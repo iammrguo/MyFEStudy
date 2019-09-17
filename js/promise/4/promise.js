@@ -30,27 +30,25 @@ function Promise(executor) {
 }
 
 // 递归解析 promise
-function resolvePromise(promise2, x, resolve, reject) {
+function resolutionProcedure(promise2, x, resolve, reject) {
     if (promise2 === x) {
         reject(new TypeError('不能循环引用'))
     }
-    let called = false
     if ((x !== null && typeof x === 'object') || typeof x === 'function') {
+        let called = false
         try {
             let then = x.then
             if (typeof then === 'function') {
                 then.call(x, y => {
                     if (called) return
                     called = true
-                    resolvePromise(promise2, y, resolve, reject)
+                    resolutionProcedure(promise2, y, resolve, reject)
                 }, r => {
                     if (called) return
                     called = true
                     reject(r)
                 })
             } else {
-                if (called) return
-                called = true
                 resolve(x)
             }
         } catch (err) {
@@ -59,8 +57,6 @@ function resolvePromise(promise2, x, resolve, reject) {
             reject(err)
         }
     } else {
-        if (called) return
-        called = true
         resolve(x)
     }
 }
@@ -78,7 +74,7 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
             setTimeout(() => {
                 try {
                     let x = onFulfilled(self.value)
-                    resolvePromise(promise2, x, resolve, reject)
+                    resolutionProcedure(promise2, x, resolve, reject)
                 } catch (err) {
                     reject(err)
                 }
@@ -87,7 +83,7 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
             setTimeout(() => {
                 try {
                     let x = onRejected(self.reason)
-                    resolvePromise(promise2, x, resolve, reject)
+                    resolutionProcedure(promise2, x, resolve, reject)
                 } catch (err) {
                     reject(err)
                 }
@@ -99,7 +95,7 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
                 setTimeout(() => {
                     try {
                         let x = onFulfilled(self.value)
-                        resolvePromise(promise2, x, resolve, reject)
+                        resolutionProcedure(promise2, x, resolve, reject)
                     } catch (err) {
                         reject(err)
                     }
@@ -109,7 +105,7 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
                 setTimeout(() => {
                     try {
                         let x = onRejected(self.reason)
-                        resolvePromise(promise2, x, resolve, reject)
+                        resolutionProcedure(promise2, x, resolve, reject)
                     } catch (err) {
                         reject(err)
                     }
@@ -129,6 +125,57 @@ Promise.defer = Promise.deferred = function(){
         dfd.reject = reject;
     });
     return dfd;
+}
+
+Promise.prototype.catch = function (errFn) {
+    return this.then(null,errFn)
+}
+Promise.all = function (values){
+    return new Promise((resolve,reject) => {
+        let arr = [] // 最终结果的数组
+        let index = 0
+        function processData(key, value) {
+            index++
+            arr[key] = value
+            if(index === values.length) { // 如果最终的结果的个数和values的个数相等 抛出结果即可
+                resolve(arr)
+            }
+        }
+        for(let i = 0; i < values.length; i++){
+            let current = values[i];
+            if(current && current.then && typeof current.then === 'function'){
+                // promise
+                current.then(y => {
+                    processData(i, y);
+                }, reject)
+            } else {
+                processData(i, current);
+            }
+        }
+    })
+}
+Promise.race = function (values) { 
+    return new Promise((resolve, reject) => {
+        for(let i = 0; i < values.length; i++) {
+            let current = values[i];
+            if(current && current.then && typeof current.then == 'function'){
+                // race方法 如果已经成功了 就不会失败了 反之一样
+                current.then(resolve, reject)
+            } else {
+               resolve(current);
+            }
+        }
+    });
+}
+Promise.resolve = function () {
+    return new Promise((resolve, reject) => {
+        resolve();
+    })
+}
+Promise.reject = function () {
+    return new Promise((resolve, reject) => {
+        reject();
+    })
 }
 
 module.exports = Promise
